@@ -19,7 +19,43 @@ from db.model import SavedTotal
 
 
 app = Flask("myAppName")
-app.secret_key = b'v]\x9a\xad\xc3\r\xd9g\x13n\xb6V\x99\x85\xfdK\xf2v\x92\x80\xd9\xb3M\x01'
+
+# HOST ON HEROKU
+# the secret key saved in the code base is now accessible to anyone with out code, use env variable instead
+# app.secret_key = b'v]\x9a\xad\xc3\r\xd9g\x13n\xb6V\x99\x85\xfdK\xf2v\x92\x80\xd9\xb3M\x01' old key here not used anymore
+
+# 1)  add secret key environ variable to local machine run:
+# export SECRET_KEY=<my_key_value>
+
+# 2) add secret key environ variable to heroku:
+# after installing heroku cli and running git init for the app run 'heroku create' (within the cacluator git repository directory)
+# this will create a heroku app and add a git remote to the repository:
+
+# (venv) markstewart@MacBook-Pro calculator % heroku create
+# Creating app... done, ⬢ dry-castle-43290
+# https://dry-castle-43290.herokuapp.com/ | https://git.heroku.com/dry-castle-43290.git
+
+# set the environ variable in heroku:
+# generate a key in python console first:
+    # python
+    # import os
+    # os.urandom(24)
+# heroku config:set SECRET_KEY=<my_secret_key> --app dry-castle-43290
+
+# 3) install gunicorn (wsgi server) and pyscopg2 (connect to postgress db)
+    # pip install gunicorn psycopg2
+    # https://stackoverflow.com/questions/49811955/unable-to-install-psycopg2-pip-install-psycopg2
+
+# 4) Ammend the list of requiredments to include pyscopg2 and gunicorn
+    # pip freeze > requirements.txt
+
+# 5) heroku needs to know the command to run the application:
+    # create Procfile 
+    # 'web: gunicorn main:app'
+    # tells heroku to start web server, run gunicorn and point it to the app in main.py
+
+
+app.secret_key = os.environ.get('SECRET_KEY').encode()
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
