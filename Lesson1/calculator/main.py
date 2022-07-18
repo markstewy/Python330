@@ -50,6 +50,32 @@ def save():
 
     return render_template('save.jinja2', code=code)
 
+@app.route('/retrieve')
+def retrieve():
+    # because the retrieve form uses the GET method, we have to use Flasks
+    # request.args instead of the request.form
+    # default value of None if they haven't submited the form yet
+    retrieveCode = request.args.get('code', None)
+
+    # If the suer is visiting the retrieve page (did not submit form yet):
+        #Then just reder the retrieve.jinja2 template
+    # But if they did submit the form:
+        # Then attempt to retriee teh SavedTotal that has the provided code
+        # Then save the total from that SavedTotal into the session['total']
+        # Then redirect the user back to the main 'add' page
+    if retrieveCode is None:
+        return render_template('retrieve.jinja2')
+    else:
+        # try catch in case code doesn't exist in the db
+        try:
+            saved_total = SavedTotal.get(SavedTotal.code == retrieveCode)
+        except SavedTotal.DoesNotExist:
+            return render_template('retrieve.jinja2', error="Code not found")
+
+        session['total'] = saved_total.value
+
+        return redirect(url_for('add'))
+
 
 
 
@@ -59,9 +85,20 @@ if __name__ == "__main__":
 
 # try to hit port 5000 on localhost, make sure you add the `/add` route - it's the only one defined
 
+# Try it out:
 # create a session key with some random data from python
 # in the terminal (with venv activated) run:
 # python
 # import os
 # os.urandom(24)
 # assign the random key to the app.secret_key, now you can utilize the 'session' map for storing cookies
+
+
+
+# Try it out:
+# go to add route and increment numbers by adding, you will see the session persists across browser refreshes
+# it will persist until the session is cleared
+# save a and copy the saved id that is gernated
+# increment the total some more in the session
+# go to the retrieve route and enter the code: you will see that it sets the session total back to the value saved for that token
+# try entering a bad code and you will see the error message
