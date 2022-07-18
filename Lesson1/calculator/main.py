@@ -53,7 +53,23 @@ app = Flask("myAppName")
     # create Procfile 
     # 'web: gunicorn main:app'
     # tells heroku to start web server, run gunicorn and point it to the app in main.py
+# 6) local has been using sqlite, heroku uses a postgress db, create a postgress db on heroku:
+    # `heroku addons:create heroku-postgresql:hobby-dev --app dry-castle-43290`     (https://stackoverflow.com/questions/31669067/heroku-postgresql-user-and-database-creation)
+    # output: 
+        # Creating heroku-postgresql:hobby-dev on ⬢ dry-castle-43290... free
+        # Database has been created and is available
+        # ! This database is empty. If upgrading, you can transfer
+        # ! data from another database with pg:copy
+        # Created postgresql-sinuous-98800 as DATABASE_URL
+        # Use heroku addons:docs heroku-postgresql to view documentation
+# 7) inspect heroku db and secret key with `heroku config --app dry-castle-43290`:
+    # output: 
+        # === dry-castle-43290 Config Vars
+        # DATABASE_URL: postgres://kdubbjpwffupre:ba00a14da85499d3cff6540d0e67ed2e8aec3df09fd05f1151e46159bdd95874@ec2-52-72-99-110.compute-1.amazonaws.com:5432/d36bq3tiqu0mgp
+        # SECRET_KEY:   <shows my key here>
 
+# 8) push all this code to heroku:
+    #
 
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
