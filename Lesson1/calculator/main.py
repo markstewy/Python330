@@ -76,7 +76,7 @@ app = Flask("myAppName")
     # if your app is not located in the git repo base dir, you need to create another git repo at the app base dir level
     # you can then push your sub repo to a new git pository on your github and then use the following commands to set the heroku
     # remote and push your code to heroku:
-    # make sure to deactivate venv before doing the git remote stuff!
+    # does venv need to be deactivated? (no)
     # git remote add heroku https://git.heroku.com/warm-reef-31146.git
     # git push heroku main
 
