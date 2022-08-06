@@ -1,4 +1,4 @@
-#!/Users/markstewart/Dev/Python330/Lesson1/flask_REST_social_network/venv/bin/python3
+#!/Users/markstewart/Dev/Python330/Lesson1/flask_REST_HATEOS_social_network/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
