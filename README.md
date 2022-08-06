@@ -1,3 +1,3 @@
 # Python330
 
-Cliff notes on basic Flask functionality 
+UW Python330 notes and assignments mixed with some other learnings and side projects that I found useful while exploring Python APIs.
